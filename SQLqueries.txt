@@ -1,0 +1,73 @@
+USE Training_18Apr19_Cloud_CGKP
+
+CREATE TABLE tblLogin_180617
+(
+	Username NVARCHAR(25) PRIMARY KEY NOT NULL,
+	Password NVARCHAR(50) NOT NULL
+)
+
+CREATE TABLE tblCustomer_180617
+(
+	CustomerId INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	Username NVARCHAR(25) NOT NULL,
+	CustomerName NVARCHAR(50) NOT NULL,
+	Address NVARCHAR(100) NULL,
+	PhoneNumber NVARCHAR(10) NOT NULL,
+	Gender NVARCHAR(10) CHECK((Gender='male' OR Gender='female') OR Gender='other') NOT NULL,
+	DateOfBirth DATE NOT NULL,
+	IsSmoker BIT NOT NULL,
+	Hobby NVARCHAR(20) NULL
+)
+
+CREATE TABLE tblInsuranceProduct_180617
+(
+	ProductId INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	ProductName NVARCHAR(25) NOT NULL,
+	PremiumCost FLOAT NOT NULL,
+	InsuredPeriod INT NOT NULL,
+	ProductLine NVARCHAR(10) NOT NULL CHECK(ProductLine='Life' OR ProductLine='NonLife')
+)
+
+CREATE TABLE tblActivePolicy_180617
+(
+	PolicyNumber INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	CustomerId INT NOT NULL, 
+	ProductLine NVARCHAR(10) NOT NULL CHECK(ProductLine='Life' OR ProductLine='NonLife'),
+	ProductName NVARCHAR(25) NOT NULL,
+	InsuredName NVARCHAR(50) NOT NULL,
+	InsuredAge INT NOT NULL,
+	DateOfBirth DATE NOT NULL,
+	Gender NVARCHAR(10) CHECK((Gender='male' OR Gender='female') OR Gender='other') NOT NULL,
+	NomineeName NVARCHAR(50) NOT NULL,
+	NomineeRelation NVARCHAR(25) CHECK((((NomineeRelation='father'OR NomineeRelation='mother') OR
+		NomineeRelation='spouse') OR NomineeRelation='son') OR NomineeRelation='daughter') NOT NULL, 
+	IsSmoker BIT NOT NULL,
+	Address NVARCHAR(100) NULL,
+	PhoneNumber NVARCHAR(10) NOT NULL,
+	PremiumCost FLOAT NOT NULL,
+	PremiumFrequency NVARCHAR(25) 
+		CHECK(((PremiumFrequency='monthly' OR PremiumFrequency='quarterly') OR PremiumFrequency='halfquarterly') OR PremiumFrequency='annualy')
+)
+
+CREATE TABLE tblEndorsement_180617
+(
+	EndorsementId INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	CustomerId INT NOT NULL, 
+	ProductId INT NOT NULL,
+	PolicyNumber INT NOT NULL,
+	Requestdate DATE NOT NULL,
+	EndorsementStatus NVARCHAR(10) CHECK((EndorsementStatus='pending' OR EndorsementStatus='approved') OR EndorsementStatus='rejected') NOT NULL,
+	ApprovedDate DATE NULL,
+	RejectedDate DATE NULL,
+	ChangedNomineeName NVARCHAR(50) NOT NULL, 
+	ChangedNomineeRelation NVARCHAR(25) CHECK((((ChangedNomineeRelation='father'OR ChangedNomineeRelation='mother') OR
+		ChangedNomineeRelation='spouse') OR ChangedNomineeRelation='son') OR ChangedNomineeRelation='daughter') NOT NULL,
+	ChangedPremiumCost FLOAT NOT NULL,
+	ChangedProductLine NVARCHAR(10) NOT NULL CHECK(ChangedProductLine='Life' OR ChangedProductLine='NonLife')
+)
+
+CREATE TABLE tblDocuments_180617
+(
+	PolicyNumber INT PRIMARY KEY NOT NULL,
+	DocImage IMAGE NOT NULL  
+)
