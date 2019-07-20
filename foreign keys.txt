@@ -1,0 +1,5 @@
+FK_tblCustomer_180617_tblLogin_180617 =>username
+FK_tblEndorsement_180617_tblActivePolicy_180617 =>policynumber
+FK_tblEndorsement_180617_tblCustomer_180617 =>customerid
+FK_tblEndorsement_180617_tblDocuments_180617 =>policynumber
+FK_tblEndorsement_180617_tblInsuranceProduct_180617 =>productid
